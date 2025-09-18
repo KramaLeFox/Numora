@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:backgroundTint="@color/BG"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="เลือกรอบการทำซ้ำ"
+        android:textSize="16sp"/>
+
+    <Spinner
+        android:id="@+id/spinnerFrequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textCustomDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ทำซ้ำทุก X วัน:"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/editCustomDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="กรอกจำนวนวัน"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="วันที่ครบกำหนดถัดไป:" />
+
+    <TextView
+        android:id="@+id/editDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="เลือกวันที่"/>
+
+    <Button
+        android:id="@+id/btnSaveRecurring"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="บันทึก"/>
+</LinearLayout>

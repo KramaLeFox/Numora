@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/BG">
+
+    <!-- Top bar -->
+    <include
+        android:id="@+id/topBar"
+        layout="@layout/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left">
+
+            <!-- Header Button -->
+            <Button
+                android:id="@+id/btnHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="บันทึกรายรับ-รายจ่าย"
+                android:backgroundTint="@color/ButtonBG"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Transaction Type -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ประเภทรายการ"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Amount -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="จำนวนเงิน"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editAmount"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="จำนวนเงิน" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="บาท"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <!-- Category -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="หมวดหมู่"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="วันที่"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:background="@android:drawable/edit_text"
+                android:hint="เลือกวันที่"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkRecurring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="รายการทำซ้ำ" />
+
+                <TextView
+                    android:id="@+id/textRecurringSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="(ยังไม่ได้ตั้งค่ารายการทำซ้ำ)"
+                    android:textColor="@android:color/darker_gray"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnRecurringEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="แก้ไข"
+                android:layout_marginStart="0dp"
+                android:enabled="false"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- Tags -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="แท็ก"
+                android:textColor="@color/TextDarkGreen"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="false"
+                app:selectionRequired="false"
+                app:chipSpacing="8dp"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnAddTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ เพิ่มแท็ก"/>
+
+            <!-- Note -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="บันทึกช่วยจำ"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="เพิ่มบันทึก"
+                android:layout_marginBottom="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+                <!-- Submit -->
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ยืนยัน"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

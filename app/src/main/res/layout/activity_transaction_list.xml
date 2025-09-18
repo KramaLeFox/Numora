@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BG"
+    android:gravity="center">
+
+    <!-- Top bar -->
+    <include
+        android:id="@+id/topBar"
+        layout="@layout/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Title -->
+    <LinearLayout
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="รายการธุรกรรมทั้งหมด"
+            android:textSize="20sp"
+            android:textColor="@color/TextDarkGreen"
+            android:textStyle="bold"
+            android:layout_margin="16dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_below="@id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_horizontal">
+
+        <CheckBox
+            android:id="@+id/cbExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ค่าใช้จ่าย"
+            android:checked="true"/>
+
+        <CheckBox
+            android:id="@+id/cbIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="รายรับ"
+            android:checked="true"/>
+
+        <CheckBox
+            android:id="@+id/cbTransferOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ย้ายเงิน/อื่น ๆ"
+            android:checked="true"/>
+    </LinearLayout>
+
+    <!-- RecyclerView (scrollable list of transactions) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTransactions"
+        android:layout_below="@id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="20dp"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>

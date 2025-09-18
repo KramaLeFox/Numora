@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- res/values/themes.xml -->
 <resources>
+    <!-- Base app theme -->
+    <style name="Theme.FinalProject" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary branding color -->
+        <item name="colorPrimary">@color/ButtonBG</item>
+        <item name="colorPrimaryVariant">@color/ButtonBG</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-    <style name="Theme.FinalProject" parent="android:Theme.Material.Light.NoActionBar" />
+        <!-- Secondary / Accent -->
+        <item name="colorSecondary">@color/TextDarkGreen</item>
+        <item name="colorSecondaryVariant">@color/TextDarkGreen</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Backgrounds -->
+        <item name="android:colorBackground">@color/BG</item>
+        <item name="materialCardViewStyle">@style/Widget.MaterialComponents.CardView</item>
+
+        <!-- Text appearances -->
+        <item name="android:textColorPrimary">@color/TextDarkGreen</item>
+        <item name="android:textColorSecondary">@color/black</item>
+
+        <!-- Button style -->
+        <item name="buttonStyle">@style/Widget.MaterialComponents.Button</item>
+
+        <!-- Chip default style -->
+        <item name="chipStyle">@style/Widget.MaterialComponents.Chip.Entry</item>
+    </style>
 </resources>

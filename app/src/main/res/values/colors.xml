@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="TextDarkGreen">#374440</color>
     <color name="BG">#DFFFDF</color>
+    <color name="TableBG">#E6FFE6</color>
+    <color name="ButtonBG">#00BF63</color>
 </resources>
