@@ -2,45 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6FFE6">
+    android:background="@color/BG">
 
     <!-- Top bar -->
-    <LinearLayout
-        android:id="@+id/topBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#00BF63"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnNotification"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="Notification"
-            android:background="@drawable/ic_notifications"
-            android:scaleType="centerInside"/>
-
-        <TextView
-            android:id="@+id/tvAppTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Numora"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="#FFFFFF"/>
-
-        <ImageButton
-            android:id="@+id/streak"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="Notification"
-            android:scaleType="centerInside"/>
-
-    </LinearLayout>
+    <include layout="@layout/top_bar"/>
 
     <!-- Income / Expense / Balance Summary -->
     <RelativeLayout
@@ -80,7 +45,7 @@
 
             <TextView
                 android:id="@+id/tvIncome"
-                android:text="45000"
+                android:text="N/A"
                 android:textSize="16sp"
                 android:textColor="#00C853"
                 android:layout_width="wrap_content"
@@ -127,7 +92,7 @@
 
             <TextView
                 android:id="@+id/tvExpense"
-                android:text="-38000"
+                android:text="N/A"
                 android:textSize="16sp"
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
@@ -165,7 +130,7 @@
 
             <TextView
                 android:id="@+id/tvBalance"
-                android:text="7000"
+                android:text="N/A"
                 android:textSize="16sp"
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
@@ -207,6 +172,7 @@
             android:background="@drawable/bg_table"/>
 
         <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
@@ -215,16 +181,6 @@
                 <TextView android:text="รายการ" android:textColor="@color/TextDarkGreen" android:padding="5dp" android:textAlignment="center"/>
                 <TextView android:text="วันที่" android:textColor="@color/TextDarkGreen" android:padding="5dp" android:textAlignment="center"/>
                 <TextView android:text="จำนวน" android:textColor="@color/TextDarkGreen" android:padding="5dp" android:textAlignment="center"/>
-            </TableRow>
-            <TableRow android:background="@drawable/bg_table" android:backgroundTint="#22FE92">
-                <TextView android:text="ค่าเช่า" android:textColor="@color/TextDarkGreen" android:padding="5dp"/>
-                <TextView android:text="04/13/2019" android:textColor="@color/TextDarkGreen" android:padding="5dp"/>
-                <TextView android:text="-9000" android:textColor="#FF0000" android:padding="5dp"/>
-            </TableRow>
-            <TableRow android:background="@drawable/bg_table">
-                <TextView android:text="เงินเดือน" android:textColor="@color/TextDarkGreen" android:padding="5dp"/>
-                <TextView android:text="04/12/2019" android:textColor="@color/TextDarkGreen" android:padding="5dp"/>
-                <TextView android:text="+40000" android:textColor="#00C853" android:padding="5dp"/>
             </TableRow>
         </TableLayout>
 
@@ -239,142 +195,6 @@
     </LinearLayout>
 
     <!-- Bottom navigation -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-5dp">
-
-        <!-- Bottom nav -->
-        <LinearLayout
-            android:id="@+id/bottomNav"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:background="#00BF63"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <!-- Button 1 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnNav1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:text="" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_note" />
-            </FrameLayout>
-
-            <!-- Button 2 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnNav2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:text="" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_stats" />
-            </FrameLayout>
-
-            <!-- Spacer for home button in the middle -->
-            <View
-                android:layout_width="70dp"
-                android:layout_height="match_parent" />
-
-            <!-- Button 3 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnNav3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:text="" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_graph" />
-            </FrameLayout>
-
-            <!-- Button 4 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnNav4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:text="" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:src="@drawable/ic_grid" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Floating Home button -->
-        <FrameLayout
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
-            android:gravity="center">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/round_button" />
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_home" />
-
-            <FrameLayout
-                android:id="@+id/btnNavHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless" />
-        </FrameLayout>
-    </RelativeLayout>
+    <include layout="@layout/bottom_nav"/>
 
 </RelativeLayout>
