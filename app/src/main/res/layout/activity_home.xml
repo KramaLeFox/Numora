@@ -207,6 +207,7 @@
             android:background="@drawable/bg_table"/>
 
         <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
