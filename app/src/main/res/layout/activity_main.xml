@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BG"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- App Name -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/TextDarkGreen"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="200dp"
+        android:src="@drawable/logo_numora"/>
+
+    <!-- Button -->
+    <Button
+        android:id="@+id/Start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_button"
+        android:padding="10dp"
+        android:text="เข้าใช้งาน"
+        android:textColor="@color/TextDarkGreen" />
+
+</LinearLayout>
