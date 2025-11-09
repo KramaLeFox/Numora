@@ -48,7 +48,7 @@
         android:id="@+id/btnShowNote"
         android:layout_width="70dp"
         android:layout_height="32dp"
-        android:text="บันทึก"
+        android:text="เพิ่มเตือน"
         android:textSize="12sp"
         android:backgroundTint="@color/ButtonBG"
         android:textColor="@android:color/white"

@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalproject.R;
+import com.example.finalproject.database.DatabaseHelper;
+import com.example.finalproject.utils.BottomNavHelper;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -20,13 +23,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityHome extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private TextView tvIncome, tvExpense, tvBalance;
     private TableLayout tableTransactions;
     private Button transactionBtn;
     private Button more_btn;
+    private Button target_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +45,11 @@ public class ActivityHome extends AppCompatActivity {
         tableTransactions = findViewById(R.id.transactionsLayout).findViewById(R.id.tableLayout);
         transactionBtn = findViewById(R.id.Transaction_btn);
         more_btn = findViewById(R.id.btnMore);
+        target_btn = findViewById(R.id.btnNav3);
 
         PieChart pieChart = findViewById(R.id.pieChart);
 
-        setupNav();
+        BottomNavHelper.setup(this);
         setupPieChart(pieChart);
         loadSummary();
         loadTransactions();
@@ -119,17 +124,6 @@ public class ActivityHome extends AppCompatActivity {
         }
 
         cursor.close();
-    }
-
-    private void setupNav() {
-        transactionBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityHome.this, AddTransactionActivity.class);
-            startActivity(intent);
-        });
-        more_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityHome.this, TransactionListActivity.class);
-            startActivity(intent);
-        });
     }
 
     private void setupPieChart(PieChart pieChart) {

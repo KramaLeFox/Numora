@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.ui;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.ExistingPeriodicWorkPolicy;
+
+import com.example.finalproject.modules.DailyWorker;
+import com.example.finalproject.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivityHome.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

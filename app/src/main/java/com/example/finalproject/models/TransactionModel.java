@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.models;
 
 public class TransactionModel {
     private String category;

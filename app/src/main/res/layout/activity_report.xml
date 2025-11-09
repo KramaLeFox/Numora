@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BG">
+
+    <!-- Top bar -->
+    <include layout="@layout/top_bar"/>
+
+    <!-- Calendar section -->
+    <LinearLayout
+        android:id="@+id/calendarSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:text="สรุปรายรับ-รายจ่ายรายวัน"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/TextDarkGreen"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Material CalendarView -->
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:mcv_showOtherDates="all"
+            app:mcv_arrowColor="@color/TextDarkGreen"
+            app:mcv_selectionColor="@color/TextDarkGreen"
+            app:mcv_weekDayTextAppearance="@style/CalendarWeekDayText"
+            app:mcv_dateTextAppearance="@style/CalendarDateText"
+            app:mcv_headerTextAppearance="@style/CalendarHeaderText" />
+
+        <!-- Legend -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:backgroundTint="@color/Green"
+                android:background="@drawable/legend_dot" />
+
+            <TextView
+                android:text=" รายรับ "
+                android:textColor="@color/TextDarkGreen"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:backgroundTint="@color/Red"
+                android:background="@drawable/legend_dot" />
+
+            <TextView
+                android:text=" รายจ่าย"
+                android:textColor="@color/TextDarkGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Transaction detail section -->
+    <LinearLayout
+        android:id="@+id/transactionDetailSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendarSection"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvSelectedDate"
+            android:text="เลือกวันที่เพื่อดูรายละเอียด"
+            android:textColor="@color/TextDarkGreen"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"/>
+
+        <ListView
+            android:id="@+id/listTransactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/TextDarkGreen"
+            android:dividerHeight="1dp"
+            android:background="@drawable/bg_table"
+            android:padding="5dp"/>
+    </LinearLayout>
+
+    <!-- Bottom navigation -->
+    <include layout="@layout/bottom_nav"/>
+</RelativeLayout>

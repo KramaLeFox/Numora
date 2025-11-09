@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:padding="16dp"
+    android:background="@drawable/bg_card">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="เพิ่มเป้าหมายใหม่"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/TextDarkGreen"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Target Type -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ประเภทเป้าหมาย:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spTargetType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/target_types"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Amount -->
+        <TextView
+            android:id="@+id/tvAmountLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="จำนวนเงินเป้าหมาย:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/etTargetAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0.00"
+            android:inputType="numberDecimal"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:textColor="@color/TextDarkGreen"
+            android:textColorHint="@color/TextDarkGreen"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Percentage -->
+        <TextView
+            android:id="@+id/tvPercentageLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="เปอร์เซ็นต์เป้าหมาย:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/etTargetPercentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0%"
+            android:inputType="numberDecimal"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:textColor="@color/TextDarkGreen"
+            android:textColorHint="@color/TextDarkGreen"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Dates -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="วันเริ่มต้น:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/etStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="YYYY-MM-DD"
+            android:inputType="date"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:textColor="@color/TextDarkGreen"
+            android:textColorHint="@color/TextDarkGreen"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="วันสิ้นสุด:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/etEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="YYYY-MM-DD"
+            android:inputType="date"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:textColor="@color/TextDarkGreen"
+            android:textColorHint="@color/TextDarkGreen"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+</ScrollView>

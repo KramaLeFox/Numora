@@ -11,4 +11,6 @@
     <color name="BG">#DFFFDF</color>
     <color name="TableBG">#E6FFE6</color>
     <color name="ButtonBG">#00BF63</color>
+    <color name="Green">#00C853</color> <!-- Income dot -->
+    <color name="Red">#FF1744</color>   <!-- Expense dot -->
 </resources>

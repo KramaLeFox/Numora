@@ -1,10 +1,12 @@
-package com.example.finalproject;
+package com.example.finalproject.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.finalproject.models.TransactionModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +58,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_TT_ID = "tt_id";
     private static final String COL_TT_TRANSACTION_ID = "transaction_id";
     private static final String COL_TT_TAG_ID = "tag_id";
+
+    // Targets Table
+    private static final String TABLE_TARGETS = "Targets";
+    private static final String COL_TARGET_ID = "target_id";
+    private static final String COL_TARGET_CATEGORY_ID = "category_id";
+    private static final String COL_TARGET_TAG_ID = "tag_id";
+    private static final String COL_TARGET_AMOUNT = "T_amount";
+    private static final String COL_TARGET_START_DATE = "start_date";
+    private static final String COL_TARGET_END_DATE = "end_date";
+    private static final String COL_TARGET_TYPE = "target_type";
+    private static final String COL_TARGET_PERCENTAGE = "T_percentage";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -114,11 +127,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + COL_TT_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + COL_TRANSACTION_ID + ") ON DELETE CASCADE, " +
                 "FOREIGN KEY(" + COL_TT_TAG_ID + ") REFERENCES " + TABLE_TAGS + "(" + COL_TAG_ID + ") ON DELETE CASCADE);";
 
+        String createTargetsTable = "CREATE TABLE " + TABLE_TARGETS + " (" +
+                COL_TARGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_TARGET_TYPE + " TEXT NOT NULL, " + // AMOUNT / PERCENTAGE / CATEGORY_GROUP
+                COL_TARGET_CATEGORY_ID + " INTEGER, " +
+                COL_TARGET_TAG_ID + " INTEGER, " +
+                COL_TARGET_AMOUNT + " REAL, " +
+                COL_TARGET_PERCENTAGE + " REAL, " +
+                COL_TARGET_START_DATE + " TEXT NOT NULL, " +
+                COL_TARGET_END_DATE + " TEXT NOT NULL, " +
+                "FOREIGN KEY(" + COL_TARGET_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + COL_CATEGORY_ID + ") ON DELETE CASCADE, " +
+                "FOREIGN KEY(" + COL_TARGET_TAG_ID + ") REFERENCES " + TABLE_TAGS + "(" + COL_TAG_ID + ") ON DELETE SET NULL" +
+                ");";
+
         db.execSQL(createCategoryTable);
         db.execSQL(createTransactionsTable);
         db.execSQL(createRecurringTable);
         db.execSQL(createTagsTable);
         db.execSQL(createTransactionTagsTable);
+        db.execSQL(createTargetsTable);
 
         insertDefaultCategories(db);
     }
@@ -132,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('สุขภาพ', 'ค่าใช้จ่าย', 'Necessity', 'ค่ารักษาพยาบาล/ยา/ประกัน')");
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('การศึกษา', 'ค่าใช้จ่าย', 'Necessity', 'ค่าเล่าเรียน/หนังสือ/คอร์สเรียน')");
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('บันเทิง', 'ค่าใช้จ่าย', 'Luxury', 'หนัง/เพลง/เกม/กิจกรรมยามว่าง')");
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('ของใช้ส่วนตัว', 'ค่าใช้จ่าย', 'Luxury', 'เสื้อผ้า/ของใช้ประจำวัน')");
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('ของใช้ส่วนตัว', 'ค่าใช้จ่าย', 'Necessity', 'เสื้อผ้า/ของใช้ประจำวัน')");
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('หนี้สิน', 'ค่าใช้จ่าย', 'Necessity', 'การผ่อนชำระ/หนี้บัตรเครดิต')");
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('ช็อปปิ้ง', 'ค่าใช้จ่าย', 'Luxury', 'ค่าใช้จ่ายสำหรับการช็อปปิ้ง')");
         db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COL_C_NAME + ", " + COL_C_TYPE + ", C_ext_type, " + COL_C_DESCRIPTION + ") VALUES ('อื่น ๆ(จำเป็น)', 'ค่าใช้จ่าย', 'Necessity', 'ค่าใช้จ่ายเบ็ดเตล็ดทั่วไปที่มีความจำเป็น')");
@@ -164,6 +191,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECURRING);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION_TAGS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TARGETS);
         onCreate(db);
     }
 
@@ -507,6 +535,178 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "AND c." + COL_C_EXT_TYPE + " != 'Transfer' " +
                 "GROUP BY c." + COL_C_NAME;
         return db.rawQuery(query, null);
+    }
+
+    // Predict next month's income based on 3-month average or recurring incomes
+    public double predictNextMonthIncome() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double predictedIncome = 0.0;
+
+        // Get average income from last 3 months
+        String threeMonthQuery = "SELECT AVG(monthly_income) FROM (" +
+                "SELECT strftime('%Y-%m', " + COL_DATE + ") AS month, SUM(" + COL_AMOUNT + ") AS monthly_income " +
+                "FROM " + TABLE_TRANSACTIONS + " t " +
+                "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                "WHERE c." + COL_C_TYPE + " = 'รายรับ' " +
+                "GROUP BY strftime('%Y-%m', " + COL_DATE + ") " +
+                "ORDER BY month DESC LIMIT 3" +
+                ");";
+
+        Cursor cursor = db.rawQuery(threeMonthQuery, null);
+        if (cursor.moveToFirst()) {
+            predictedIncome = cursor.getDouble(0);
+        }
+        cursor.close();
+
+        // If not enough transaction data, use recurring incomes instead
+        if (predictedIncome <= 0) {
+            String recurringQuery = "SELECT SUM(" + COL_R_AMOUNT + ") FROM " + TABLE_RECURRING +
+                    " WHERE " + COL_R_TYPE + " = 'รายรับ';";
+            Cursor recurCursor = db.rawQuery(recurringQuery, null);
+            if (recurCursor.moveToFirst()) {
+                predictedIncome = recurCursor.getDouble(0);
+            }
+            recurCursor.close();
+        }
+
+        return predictedIncome > 0 ? predictedIncome : 0.0;
+    }
+
+    // Calculate 50/30/20 recommended distribution based on predicted income
+    public double[] getIncomeDistributionPercentagesFix(double predictedIncome) {
+        if (predictedIncome <= 0) return new double[]{0, 0, 0};
+
+        double necessity = predictedIncome * 0.5;
+        double luxury = predictedIncome * 0.3;
+        double savings = predictedIncome * 0.2;
+
+        return new double[]{necessity, luxury, savings};
+    }
+
+    public boolean canGenerateAdvice(double predictedIncome, double predictedExpenses) {
+        if (predictedIncome <= 0) return false;
+        //if (predictedExpenses <= 0 && predictedIncome < someThreshold) return false;
+        if (predictedExpenses > predictedIncome * 0.9) return false; // too high, data might be wrong
+        return true;
+    }
+
+    // Predict next month's Necessity expenses based on past 3 months or recurring items
+    public double predictNextMonthNecessityExpense() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double predicted = 0.0;
+
+        // Average over the last 3 months
+        String query = "SELECT AVG(monthly_expense) FROM (" +
+                "SELECT strftime('%Y-%m', t." + COL_DATE + ") AS month, SUM(t." + COL_AMOUNT + ") AS monthly_expense " +
+                "FROM " + TABLE_TRANSACTIONS + " t " +
+                "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                "WHERE c." + COL_C_EXT_TYPE + " = 'Necessity' AND c." + COL_C_TYPE + " = 'ค่าใช้จ่าย' " +
+                "GROUP BY strftime('%Y-%m', t." + COL_DATE + ") " +
+                "ORDER BY month DESC LIMIT 3" +
+                ");";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            predicted = cursor.getDouble(0);
+        }
+        cursor.close();
+
+        // Fallback: use recurring necessity expenses
+        if (predicted <= 0) {
+            String recurQuery = "SELECT SUM(" + COL_R_AMOUNT + ") FROM " + TABLE_RECURRING +
+                    " WHERE " + COL_R_TYPE + " = 'ค่าใช้จ่าย' AND " + COL_R_CATEGORY_ID +
+                    " IN (SELECT " + COL_CATEGORY_ID + " FROM " + TABLE_CATEGORY +
+                    " WHERE " + COL_C_EXT_TYPE + " = 'Necessity');";
+            Cursor recurCursor = db.rawQuery(recurQuery, null);
+            if (recurCursor.moveToFirst()) predicted = recurCursor.getDouble(0);
+            recurCursor.close();
+        }
+
+        return predicted > 0 ? predicted : 0.0;
+    }
+
+    // Predict next month's Luxury expenses based on past 3 months or recurring items
+    public double predictNextMonthLuxuryExpense() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double predicted = 0.0;
+
+        String query = "SELECT AVG(monthly_expense) FROM (" +
+                "SELECT strftime('%Y-%m', t." + COL_DATE + ") AS month, SUM(t." + COL_AMOUNT + ") AS monthly_expense " +
+                "FROM " + TABLE_TRANSACTIONS + " t " +
+                "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                "WHERE c." + COL_C_EXT_TYPE + " = 'Luxury' AND c." + COL_C_TYPE + " = 'ค่าใช้จ่าย' " +
+                "GROUP BY strftime('%Y-%m', t." + COL_DATE + ") " +
+                "ORDER BY month DESC LIMIT 3" +
+                ");";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            predicted = cursor.getDouble(0);
+        }
+        cursor.close();
+
+        if (predicted <= 0) {
+            String recurQuery = "SELECT SUM(" + COL_R_AMOUNT + ") FROM " + TABLE_RECURRING +
+                    " WHERE " + COL_R_TYPE + " = 'ค่าใช้จ่าย' AND " + COL_R_CATEGORY_ID +
+                    " IN (SELECT " + COL_CATEGORY_ID + " FROM " + TABLE_CATEGORY +
+                    " WHERE " + COL_C_EXT_TYPE + " = 'Luxury');";
+            Cursor recurCursor = db.rawQuery(recurQuery, null);
+            if (recurCursor.moveToFirst()) predicted = recurCursor.getDouble(0);
+            recurCursor.close();
+        }
+
+        return predicted > 0 ? predicted : 0.0;
+    }
+
+    // Predict next month's Saving/Investment expenses based on past 3 months or recurring items
+    public double predictNextMonthSavingExpense() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double predicted = 0.0;
+
+        String query = "SELECT AVG(monthly_expense) FROM (" +
+                "SELECT strftime('%Y-%m', t." + COL_DATE + ") AS month, SUM(t." + COL_AMOUNT + ") AS monthly_expense " +
+                "FROM " + TABLE_TRANSACTIONS + " t " +
+                "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                "WHERE c." + COL_C_TYPE + " = 'ออมเงิน/ลงทุน' " +
+                "GROUP BY strftime('%Y-%m', t." + COL_DATE + ") " +
+                "ORDER BY month DESC LIMIT 3" +
+                ");";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            predicted = cursor.getDouble(0);
+        }
+        cursor.close();
+
+        if (predicted <= 0) {
+            String recurQuery = "SELECT SUM(" + COL_R_AMOUNT + ") FROM " + TABLE_RECURRING +
+                    " WHERE " + COL_R_TYPE + " = 'ออมเงิน/ลงทุน';";
+            Cursor recurCursor = db.rawQuery(recurQuery, null);
+            if (recurCursor.moveToFirst()) predicted = recurCursor.getDouble(0);
+            recurCursor.close();
+        }
+
+        return predicted > 0 ? predicted : 0.0;
+    }
+
+    public Cursor getAllGoals() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Assume your table is named "goals" and has columns: id, goal_name, progress
+        return db.rawQuery("SELECT goal_name, progress FROM goals", null);
+    }
+
+    // Insert target
+    public long insertTarget(int categoryId, Integer tagId, double amount, String startDate, String endDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COL_TARGET_CATEGORY_ID, categoryId);
+        if (tagId != null) values.put(COL_TARGET_TAG_ID, tagId);
+        values.put(COL_TARGET_AMOUNT, amount);
+        values.put(COL_TARGET_START_DATE, startDate);
+        values.put(COL_TARGET_END_DATE, endDate);
+
+        return db.insert(TABLE_TARGETS, null, values);
     }
 
 }

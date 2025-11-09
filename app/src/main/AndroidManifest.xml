@@ -21,7 +21,7 @@
 
         <!-- Main launcher activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -33,23 +33,35 @@
 
         <!-- Home screen -->
         <activity
-            android:name=".ActivityHome"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
         <!-- Add transaction -->
         <activity
-            android:name=".AddTransactionActivity"
+            android:name=".ui.AddTransactionActivity"
             android:exported="true"
             android:label="Add Transaction"
             android:theme="@style/Theme.FinalProject" />
 
         <!-- Chart / reports -->
         <activity
-            android:name=".TransactionListActivity"
+            android:name=".ui.TransactionListActivity"
             android:exported="true"
             android:label="Chart"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity
+            android:name=".ui.TargetsActivity"
+            android:exported="true"
+            android:label="Targets"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity
+            android:name=".ui.ReportActivity"
+            android:exported="true"
+            android:label="Report"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
     </application>

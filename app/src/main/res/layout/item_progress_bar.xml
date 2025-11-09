@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/bg_card"
+    android:layout_marginBottom="10dp">
+
+    <!-- Title row with config button -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvGoalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ชื่อเป้าหมาย"
+            android:textStyle="bold"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <ImageButton
+            android:id="@+id/btnConfig"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Configure Goal"
+            app:srcCompat="@android:drawable/ic_menu_manage"
+            app:tint="@color/TextDarkGreen" />
+
+    </RelativeLayout>
+
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:progress="0"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_green"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Amount text -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvProgressAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="0/0 (0%)"
+            android:textSize="14sp"
+            android:textColor="@color/TextDarkGreen" />
+
+        <TextView
+            android:id="@+id/tvDueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Due --/--/----"
+            android:textSize="14sp"
+            android:textColor="@color/TextDarkGreen" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/BG">
+
+    <!-- Include Top Bar -->
+    <include
+        layout="@layout/top_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp">
+
+            <!-- Header -->
+            <TextView
+                android:id="@+id/tvReports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="เป้าหมาย"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@color/TextDarkGreen"
+                android:background="@drawable/bg_section"
+                android:padding="8dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Top Buttons -->
+            <LinearLayout
+                android:id="@+id/btnGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:id="@+id/btnAddGoal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="เพิ่มเป้าหมาย"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@color/TextDarkGreen" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btnEditGoal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="แก้ไข/ลบ"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@color/TextDarkGreen" />
+            </LinearLayout>
+
+            <!-- Pie Chart -->
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChartDefaultGoal"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/tvIncomeSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/TextDarkGreen"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:padding="8dp"
+                android:background="@drawable/bg_section" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

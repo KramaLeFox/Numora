@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.ui;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finalproject.R;
+import com.example.finalproject.database.DatabaseHelper;
+import com.example.finalproject.models.TransactionModel;
 
 import java.util.ArrayList;
 import java.util.List;

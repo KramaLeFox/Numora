@@ -9,6 +9,8 @@ lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.8.0"
 composeBom = "2024.09.00"
 material = "1.9.0"
+materialCalendarview = "1.4.3"
+materialCalendarviewVersion = "2.0.1"
 materialVersion = "1.12.0"
 mpandroidchart = "v3.1.0"
 coreAnimation = "1.0.0"
@@ -16,6 +18,7 @@ roomCommonJvm = "2.8.0"
 roomRuntime = "2.8.0"
 roomCompiler = "2.8.0"
 workRuntime = "2.10.5"
+applandeoMaterialCalendarview = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,12 +37,15 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+material-calendarview = { module = "com.prolificinteractive:material-calendarview", version.ref = "materialCalendarview" }
+material-calendarview-v201 = { module = "com.prolificinteractive:material-calendarview", version.ref = "materialCalendarviewVersion" }
 material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 androidx-core-animation = { group = "androidx.core", name = "core-animation", version.ref = "coreAnimation" }
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+applandeo-material-calendarview = { module = "com.github.Applandeo:Material-Calendar-View", version.ref = "applandeoMaterialCalendarview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
