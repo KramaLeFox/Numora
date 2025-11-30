@@ -52,6 +52,7 @@ dependencies {
     implementation libs.mpandroidchart
     implementation libs.androidx.work.runtime
     implementation libs.material.calendarview
+    implementation libs.flexbox
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

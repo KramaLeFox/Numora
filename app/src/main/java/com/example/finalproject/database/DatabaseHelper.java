@@ -5,12 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
+import com.example.finalproject.models.CategoryModel;
 import com.example.finalproject.models.TransactionModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -201,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         String finalType = type;
 
-        if (type.equals("ออมเงิน")) {
+        if (type.equals("ออมเงิน/ลงทุน")) {
             finalType = "ค่าใช้จ่าย";
         }
 
@@ -707,6 +714,226 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_TARGET_END_DATE, endDate);
 
         return db.insert(TABLE_TARGETS, null, values);
+    }
+
+    public int getDistinctMonthCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int count = 0;
+
+        // Use the correct table and column name (T_date)
+        String query = "SELECT COUNT(DISTINCT strftime('%Y-%m', " + COL_DATE + ")) FROM " + TABLE_TRANSACTIONS;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, null);
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return count;
+    }
+
+    // Get all categories with their type and ext_type
+    public List<CategoryModel> getAllCategories() {
+        List<CategoryModel> categories = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CATEGORY,
+                new String[]{COL_CATEGORY_ID, COL_C_NAME, COL_C_TYPE, COL_C_EXT_TYPE, COL_C_DESCRIPTION},
+                null, null, null, null,
+                COL_C_NAME + " ASC");
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_CATEGORY_ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(COL_C_NAME));
+            String type = cursor.getString(cursor.getColumnIndexOrThrow(COL_C_TYPE));
+            String extType = cursor.getString(cursor.getColumnIndexOrThrow(COL_C_EXT_TYPE));
+            String description = cursor.getString(cursor.getColumnIndexOrThrow(COL_C_DESCRIPTION));
+            categories.add(new CategoryModel(id, name, type, extType, description));
+        }
+        cursor.close();
+        return categories;
+    }
+
+    public void insertFake3MonthsTransactions(Context context) {
+        // Categories
+        String[] categoriesNecessity = {"อาหาร", "เดินทาง", "ที่พัก"};
+        String[] categoriesLuxury = {"บันเทิง", "ช็อปปิ้ง", "ท่องเที่ยว"};
+        String[] categoriesSaving = {"ฝากเงิน", "ลงทุน"};
+
+        Calendar calendar = Calendar.getInstance();
+        Random random = new Random();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+
+        // Last 3 months
+        for (int monthOffset = -2; monthOffset <= 0; monthOffset++) {
+            calendar.setTime(new Date());
+            calendar.add(Calendar.MONTH, monthOffset);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+
+            // Determine max day to avoid future dates
+            int maxDay = 28; // default safe
+            if (monthOffset == 0) { // current month
+                maxDay = calendar.get(Calendar.DAY_OF_MONTH); // today or earlier
+            }
+
+            for (int i = 0; i < 10; i++) {
+                int day = 1 + random.nextInt(maxDay); // never exceeds maxDay
+                calendar.set(Calendar.DAY_OF_MONTH, day);
+                Date transactionDate = calendar.getTime();
+                String dateStr = sdf.format(transactionDate);
+
+                String category;
+                double amount;
+                String type;
+
+                int r = random.nextInt(3);
+                if (r == 0) {
+                    category = categoriesNecessity[random.nextInt(categoriesNecessity.length)];
+                    amount = 500 + random.nextInt(2000);
+                    type = "ค่าใช้จ่าย";
+                } else if (r == 1) {
+                    category = categoriesLuxury[random.nextInt(categoriesLuxury.length)];
+                    amount = 300 + random.nextInt(1500);
+                    type = "ค่าใช้จ่าย";
+                } else {
+                    category = categoriesSaving[random.nextInt(categoriesSaving.length)];
+                    amount = 1000 + random.nextInt(3000);
+                    type = "ออมเงิน/ลงทุน";
+                }
+
+                int categoryId = getCategoryIdByName(category);
+                if (categoryId == -1) categoryId = getCategoryIdByName("อื่น ๆ");
+
+                insertTransaction(categoryId, type, dateStr, amount, "dev");
+            }
+        }
+
+        Toast.makeText(context, "Added 3 months of fake transaction data!", Toast.LENGTH_SHORT).show();
+    }
+
+    public String getFirstDayOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(cal.getTime());
+    }
+
+    public String getLastDayOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(cal.getTime());
+    }
+
+    public Cursor getTransactionsThisMonth() {
+        String firstDay = getFirstDayOfMonth();
+        String lastDay = getLastDayOfMonth();
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT * FROM " + TABLE_TRANSACTIONS +
+                        " WHERE " + COL_DATE + " BETWEEN ? AND ?" +
+                        " ORDER BY " + COL_DATE + " DESC",
+                new String[]{firstDay, lastDay}
+        );
+    }
+
+    public Cursor getExpenseAndSavingsThisMonth() {
+        String firstDay = getFirstDayOfMonth();
+        String lastDay = getLastDayOfMonth();
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT " + COL_C_NAME + ", SUM(" + COL_AMOUNT + ") as total " +
+                        "FROM " + TABLE_TRANSACTIONS + " t " +
+                        "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                        "WHERE t." + COL_DATE + " BETWEEN ? AND ? " +
+                        "AND t." + COL_TYPE + " NOT IN ('โอนเงิน', 'รายรับ') " +
+                        "GROUP BY " + COL_C_NAME,
+                new String[]{firstDay, lastDay}
+        );
+    }
+
+    public double getTotalNecessityThisMonth() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT IFNULL(SUM(t." + COL_AMOUNT + "),0) " +
+                        "FROM " + TABLE_TRANSACTIONS + " t " +
+                        "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                        "WHERE t." + COL_TYPE + "='ค่าใช้จ่าย' AND c." + COL_C_EXT_TYPE + "='Necessity' " +
+                        "AND strftime('%Y-%m', t." + COL_DATE + ") = strftime('%Y-%m','now')",
+                null
+        );
+        double total = 0;
+        if (cursor.moveToFirst()) total = cursor.getDouble(0);
+        cursor.close();
+        return total;
+    }
+
+    public double getTotalLuxuryThisMonth() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT IFNULL(SUM(t." + COL_AMOUNT + "),0) " +
+                        "FROM " + TABLE_TRANSACTIONS + " t " +
+                        "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                        "WHERE t." + COL_TYPE + "='ค่าใช้จ่าย' AND c." + COL_C_EXT_TYPE + "='Luxury' " +
+                        "AND strftime('%Y-%m', t." + COL_DATE + ") = strftime('%Y-%m','now')",
+                null
+        );
+        double total = 0;
+        if (cursor.moveToFirst()) total = cursor.getDouble(0);
+        cursor.close();
+        return total;
+    }
+
+    public double getTotalSavingThisMonth() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT IFNULL(SUM(t." + COL_AMOUNT + "),0) " +
+                        "FROM " + TABLE_TRANSACTIONS + " t " +
+                        "JOIN " + TABLE_CATEGORY + " c ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
+                        "WHERE t." + COL_TYPE + "='ค่าใช้จ่าย' AND c." + COL_C_EXT_TYPE + " IN ('Savings','Investment') " +
+                        "AND strftime('%Y-%m', t." + COL_DATE + ") = strftime('%Y-%m','now')",
+                null
+        );
+        double total = 0;
+        if (cursor.moveToFirst()) total = cursor.getDouble(0);
+        cursor.close();
+        return total;
+    }
+
+    public double getTotalIncomeThisMonth() {
+        return getTotalByTypeThisMonth("รายรับ");
+    }
+
+    public double getTotalExpenseThisMonth() {
+        return getTotalByTypeThisMonth("ค่าใช้จ่าย");
+    }
+
+    public double getBalanceThisMonth() {
+        return getTotalIncomeThisMonth() - getTotalExpenseThisMonth();
+    }
+
+    private double getTotalByTypeThisMonth(String type) {
+        double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT IFNULL(SUM(" + COL_AMOUNT + "), 0) " +
+                        "FROM " + TABLE_TRANSACTIONS + " " +
+                        "WHERE " + COL_TYPE + " = ? " +
+                        "AND strftime('%Y-%m'," + COL_DATE + ") = strftime('%Y-%m','now')",
+                new String[]{type}
+        );
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+        cursor.close();
+        return total;
     }
 
 }

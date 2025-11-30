@@ -5,24 +5,13 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:padding="16dp"
-    android:background="@drawable/bg_card">
+    android:backgroundTint="@color/BG">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal">
-
-        <!-- Title -->
-        <TextView
-            android:id="@+id/tvDialogTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="เพิ่มเป้าหมายใหม่"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@color/TextDarkGreen"
-            android:layout_marginBottom="12dp" />
 
         <!-- Target Type -->
         <TextView
@@ -85,6 +74,30 @@
             android:textColor="@color/TextDarkGreen"
             android:textColorHint="@color/TextDarkGreen"
             android:layout_marginBottom="10dp" />
+
+        <!-- Category for custom target -->
+        <TextView
+            android:id="@+id/tvCustomCategoryLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="หมวดหมู่เป้าหมาย:"
+            android:textColor="@color/TextDarkGreen"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/etCustomCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="กรอกชื่อหมวดหมู่"
+            android:inputType="text"
+            android:background="@drawable/bg_field"
+            android:padding="8dp"
+            android:textColor="@color/TextDarkGreen"
+            android:textColorHint="@color/TextDarkGreen"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
 
         <!-- Dates -->
         <TextView

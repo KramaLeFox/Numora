@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.finalproject.R;
 import com.example.finalproject.models.TransactionModel;
 import com.example.finalproject.database.DatabaseHelper;
+import com.example.finalproject.utils.BottomNavHelper;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -31,6 +32,7 @@ public class ReportActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
 
         decorateCalendar(); // initial setup
+        BottomNavHelper.setup(this);
     }
 
     @Override

@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/etNecessityPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="จำเป็น (%)"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etLuxuryPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ฟุ่มเฟือย (%)"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/etSavingPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ออม/ลงทุน (%)"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnRecommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="แนะนำจากข้อมูล"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp" />
+</LinearLayout>

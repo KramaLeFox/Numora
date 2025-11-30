@@ -34,4 +34,12 @@
         android:text="เข้าใช้งาน"
         android:textColor="@color/TextDarkGreen" />
 
+    <Button
+        android:id="@+id/Dev_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:text="Debug"
+        android:textColor="@color/TextDarkGreen" />
+
 </LinearLayout>

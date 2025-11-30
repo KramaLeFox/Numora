@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
+                android:weightSum="3"
                 android:gravity="center"
                 android:layout_marginBottom="10dp">
 
@@ -55,7 +55,7 @@
                     android:textColor="@color/TextDarkGreen" />
 
                 <Space
-                    android:layout_width="16dp"
+                    android:layout_width="8dp"
                     android:layout_height="match_parent" />
 
                 <Button
@@ -66,6 +66,19 @@
                     android:text="แก้ไข/ลบ"
                     android:background="@drawable/bg_button"
                     android:textColor="@color/TextDarkGreen" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btnConfigGoal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ตั้งค่าเป้าหมายหลัก"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@color/TextDarkGreen" />
             </LinearLayout>
 
             <!-- Pie Chart -->
@@ -74,6 +87,14 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="20dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutCustomLegend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"/>
 
             <TextView
                 android:id="@+id/tvIncomeSummary"

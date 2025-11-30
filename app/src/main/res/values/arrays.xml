@@ -2,9 +2,10 @@
 <resources>
 
     <string-array name="target_types">
-        <item>จำนวนเงิน</item>
-        <item>เปอร์เซ็นต์</item>
-        <item>ผสม</item>
+        <item>Amount</item>
+        <item>Percentage</item>
+        <item>Hybrid</item>
+        <item>Use less money in category…</item>
     </string-array>
 
 </resources>
