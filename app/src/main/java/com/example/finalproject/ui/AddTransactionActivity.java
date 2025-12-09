@@ -181,7 +181,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             return;
         }
 
-        long result = dbHelper.insertTransaction(categoryId, type, date, amount, note);
+        String time = getCurrentTime();
+        long result = dbHelper.insertTransaction(categoryId, type, date, time, amount, note);
 
         if (result != -1) {
             if (checkRecurring.isChecked()) {
@@ -384,6 +385,11 @@ public class AddTransactionActivity extends AppCompatActivity {
                         ExistingPeriodicWorkPolicy.REPLACE,
                         dailyWork
                 );
+    }
+
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
 }

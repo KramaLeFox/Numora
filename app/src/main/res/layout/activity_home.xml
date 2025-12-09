@@ -145,7 +145,7 @@
     <!-- Pie chart -->
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_below="@id/summaryLayout"
         android:layout_centerHorizontal="true"

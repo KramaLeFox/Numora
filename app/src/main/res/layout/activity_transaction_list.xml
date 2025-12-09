@@ -40,28 +40,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:weightSum="3">
 
-        <CheckBox
-            android:id="@+id/cbExpense"
-            android:layout_width="wrap_content"
+        <!-- Type Spinner -->
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="ค่าใช้จ่าย"
-            android:checked="true"/>
+            android:spinnerMode="dropdown" />
 
-        <CheckBox
-            android:id="@+id/cbIncome"
-            android:layout_width="wrap_content"
+        <!-- Category Spinner -->
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="รายรับ"
-            android:checked="true"/>
+            android:spinnerMode="dropdown" />
 
-        <CheckBox
-            android:id="@+id/cbTransferOther"
-            android:layout_width="wrap_content"
+        <!-- Date Spinner -->
+        <Spinner
+            android:id="@+id/spinnerDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="ย้ายเงิน/อื่น ๆ"
-            android:checked="true"/>
+            android:spinnerMode="dropdown" />
     </LinearLayout>
 
     <!-- RecyclerView (scrollable list of transactions) -->

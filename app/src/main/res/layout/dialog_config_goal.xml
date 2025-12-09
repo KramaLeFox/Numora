@@ -4,28 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="จำเป็น (%)" />
+
     <EditText
         android:id="@+id/etNecessityPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="จำเป็น (%)"
         android:inputType="numberDecimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ฟุ่มเฟือย (%)" />
 
     <EditText
         android:id="@+id/etLuxuryPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ฟุ่มเฟือย (%)"
-        android:inputType="numberDecimal"
-        android:layout_marginTop="8dp" />
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ออม/ลงทุน (%)" />
 
     <EditText
         android:id="@+id/etSavingPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ออม/ลงทุน (%)"
-        android:inputType="numberDecimal"
-        android:layout_marginTop="8dp" />
+        android:inputType="numberDecimal" />
+
+    <!-- NEW: Spinner for income source -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="เลือกวิธีคำนวณรายรับ" />
+
+    <Spinner
+        android:id="@+id/spIncomeMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnRecommend"

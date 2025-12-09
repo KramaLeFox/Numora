@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_TRANS_CATEGORY_ID = "category_id";
     private static final String COL_TYPE = "T_type";
     private static final String COL_DATE = "T_date";
+    private static final String COL_TIME = "T_time";
     private static final String COL_AMOUNT = "T_amount";
     private static final String COL_NOTE = "T_note";
 
@@ -105,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_TRANS_CATEGORY_ID + " INTEGER, " +
                 COL_TYPE + " TEXT, " +
                 COL_DATE + " TEXT, " +
+                COL_TIME + " TEXT, " +         // <-- NEW COLUMN
                 COL_AMOUNT + " REAL, " +
                 COL_NOTE + " TEXT, " +
                 "FOREIGN KEY(" + COL_TRANS_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + COL_CATEGORY_ID + "));";
@@ -203,7 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Insert transaction
-    public long insertTransaction(int categoryId, String type, String date, double amount, String note) {
+    public long insertTransaction(int categoryId, String type, String date, String time, double amount, String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String finalType = type;
@@ -215,6 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_TRANS_CATEGORY_ID, categoryId);
         values.put(COL_TYPE, finalType);
         values.put(COL_DATE, date);
+        values.put(COL_TIME, time);
         values.put(COL_AMOUNT, amount);
         values.put(COL_NOTE, note);
 
@@ -247,7 +250,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FROM " + TABLE_TRANSACTIONS + " t " +
                 "LEFT JOIN " + TABLE_CATEGORY + " c " +
                 "ON t." + COL_TRANS_CATEGORY_ID + " = c." + COL_CATEGORY_ID + " " +
-                "ORDER BY t." + COL_TRANSACTION_ID + " DESC";
+                " ORDER BY " + COL_DATE + " DESC, " + COL_TIME + " DESC";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -391,7 +394,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void makeRecurringTransaction() {
         SQLiteDatabase db = this.getWritableDatabase();
+
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+                .format(new java.util.Date());
+
+        String nowTime = new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault())
                 .format(new java.util.Date());
 
         Cursor cursor = db.query(
@@ -404,7 +411,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                // Recurring item info
                 String type = cursor.getString(cursor.getColumnIndexOrThrow(COL_R_TYPE));
                 double amount = cursor.getDouble(cursor.getColumnIndexOrThrow(COL_R_AMOUNT));
                 String note = cursor.getString(cursor.getColumnIndexOrThrow(COL_NOTE_R));
@@ -415,15 +421,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(COL_R_CATEGORY_ID));
                 if (categoryId == -1) categoryId = getCategoryIdByName("อื่น ๆ");
 
-                // Tags stored as CSV in recurring (optional)
-                String tagsCsv = cursor.getString(cursor.getColumnIndexOrThrow("tags")); // you need to add this column
+                // Tags (CSV)
+                String tagsCsv = cursor.getString(cursor.getColumnIndexOrThrow("tags"));
                 List<String> tags = new ArrayList<>();
                 if (tagsCsv != null && !tagsCsv.isEmpty()) {
-                    tags = Arrays.asList(tagsCsv.split(",")); // split into individual tags
+                    tags = Arrays.asList(tagsCsv.split(","));
                 }
 
                 // Insert new transaction
-                long newTransactionId = insertTransaction(categoryId, type, today, amount, note);
+                long newTransactionId = insertTransaction(
+                        categoryId,
+                        type,
+                        today,
+                        nowTime,
+                        amount,
+                        note
+                );
 
                 // Link tags
                 for (String tag : tags) {
@@ -768,54 +781,110 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Calendar calendar = Calendar.getInstance();
         Random random = new Random();
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
         // Last 3 months
         for (int monthOffset = -2; monthOffset <= 0; monthOffset++) {
             calendar.setTime(new Date());
             calendar.add(Calendar.MONTH, monthOffset);
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH) + 1;
 
-            // Determine max day to avoid future dates
-            int maxDay = 28; // default safe
-            if (monthOffset == 0) { // current month
-                maxDay = calendar.get(Calendar.DAY_OF_MONTH); // today or earlier
+            int maxDay;
+            if (monthOffset == 0) {
+                // Current month → only up to today
+                maxDay = calendar.get(Calendar.DAY_OF_MONTH);
+            } else {
+                // Full month → safe max 28 days
+                maxDay = 28;
             }
 
-            for (int i = 0; i < 10; i++) {
-                int day = 1 + random.nextInt(maxDay); // never exceeds maxDay
+            for (int i = 0; i < 20; i++) {  // 20 entries per month feels more realistic
+                int day = 1 + random.nextInt(maxDay);
                 calendar.set(Calendar.DAY_OF_MONTH, day);
-                Date transactionDate = calendar.getTime();
-                String dateStr = sdf.format(transactionDate);
+
+                Date dateObj = calendar.getTime();
+                String dateStr = dateFormat.format(dateObj);
+
+                // Random realistic time (07:00–22:00)
+                int hour = 7 + random.nextInt(16);
+                int minute = random.nextInt(60);
+                int second = random.nextInt(60);
+
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, second);
+
+                String timeStr = timeFormat.format(calendar.getTime());
 
                 String category;
                 double amount;
                 String type;
 
-                int r = random.nextInt(3);
-                if (r == 0) {
-                    category = categoriesNecessity[random.nextInt(categoriesNecessity.length)];
-                    amount = 500 + random.nextInt(2000);
-                    type = "ค่าใช้จ่าย";
-                } else if (r == 1) {
-                    category = categoriesLuxury[random.nextInt(categoriesLuxury.length)];
-                    amount = 300 + random.nextInt(1500);
-                    type = "ค่าใช้จ่าย";
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+                // Weekday patterns
+                if (dayOfWeek >= Calendar.MONDAY && dayOfWeek <= Calendar.FRIDAY) {
+                    int roll = random.nextInt(100);
+
+                    if (roll < 45) {
+                        category = categoriesNecessity[random.nextInt(categoriesNecessity.length)];
+                        amount = 80 + random.nextInt(1500);
+                        type = "ค่าใช้จ่าย";
+                    } else if (roll < 65) {
+                        category = "เดินทาง";
+                        amount = 20 + random.nextInt(200);
+                        type = "ค่าใช้จ่าย";
+                    } else if (roll < 75) {
+                        category = "ฝากเงิน";
+                        amount = 500 + random.nextInt(3000);
+                        type = "ออมเงิน/ลงทุน";
+                    } else {
+                        category = categoriesLuxury[random.nextInt(categoriesLuxury.length)];
+                        amount = 200 + random.nextInt(2000);
+                        type = "ค่าใช้จ่าย";
+                    }
+
                 } else {
-                    category = categoriesSaving[random.nextInt(categoriesSaving.length)];
-                    amount = 1000 + random.nextInt(3000);
-                    type = "ออมเงิน/ลงทุน";
+                    // Weekend patterns
+                    int roll = random.nextInt(100);
+
+                    if (roll < 55) {
+                        category = categoriesLuxury[random.nextInt(categoriesLuxury.length)];
+                        amount = 150 + random.nextInt(3000);
+                        type = "ค่าใช้จ่าย";
+                    } else if (roll < 75) {
+                        category = "อาหาร";
+                        amount = 100 + random.nextInt(1000);
+                        type = "ค่าใช้จ่าย";
+                    } else {
+                        category = "ท่องเที่ยว";
+                        amount = 300 + random.nextInt(5000);
+                        type = "ค่าใช้จ่าย";
+                    }
+                }
+
+                // Occasional big spike
+                if (random.nextInt(100) < 3) {
+                    category = "ช็อปปิ้ง";
+                    amount = 3000 + random.nextInt(12000);
                 }
 
                 int categoryId = getCategoryIdByName(category);
                 if (categoryId == -1) categoryId = getCategoryIdByName("อื่น ๆ");
 
-                insertTransaction(categoryId, type, dateStr, amount, "dev");
+                insertTransaction(
+                        categoryId,
+                        type,
+                        dateStr,
+                        timeStr,
+                        amount,
+                        "auto-dev"
+                );
             }
         }
 
-        Toast.makeText(context, "Added 3 months of fake transaction data!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Added realistic 3 months of fake data!", Toast.LENGTH_SHORT).show();
     }
 
     public String getFirstDayOfMonth() {
@@ -839,7 +908,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(
                 "SELECT * FROM " + TABLE_TRANSACTIONS +
                         " WHERE " + COL_DATE + " BETWEEN ? AND ?" +
-                        " ORDER BY " + COL_DATE + " DESC",
+                        " ORDER BY " + COL_DATE + " DESC, " + COL_TIME + " DESC",
                 new String[]{firstDay, lastDay}
         );
     }

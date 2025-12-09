@@ -84,7 +84,7 @@
             <!-- Pie Chart -->
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChartDefaultGoal"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="20dp" />
 
@@ -96,15 +96,13 @@
                 android:layout_marginTop="12dp"
                 android:padding="8dp"/>
 
-            <TextView
-                android:id="@+id/tvIncomeSummary"
+            <TableLayout
+                android:id="@+id/summaryTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/TextDarkGreen"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:padding="8dp"
+                android:stretchColumns="1"
                 android:background="@drawable/bg_section" />
+
 
         </LinearLayout>
     </ScrollView>

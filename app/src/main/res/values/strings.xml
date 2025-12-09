@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Numora</string>
+
+    <string-array name="income_modes">
+        <item>ใช้รายรับที่คาดการณ์</item>
+        <item>ใช้รายรับปัจจุบัน</item>
+    </string-array>
+
 </resources>
+

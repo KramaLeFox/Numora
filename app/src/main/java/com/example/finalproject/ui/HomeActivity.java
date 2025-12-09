@@ -15,9 +15,11 @@ import com.example.finalproject.R;
 import com.example.finalproject.database.DatabaseHelper;
 import com.example.finalproject.utils.BottomNavHelper;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private TextView tvIncome, tvExpense, tvBalance;
     private TableLayout tableTransactions;
-    private Button btnMore;
 
 
     @Override
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         tvExpense = findViewById(R.id.tvExpense);
         tvBalance = findViewById(R.id.tvBalance);
         tableTransactions = findViewById(R.id.transactionsLayout).findViewById(R.id.tableLayout);
-        btnMore = findViewById(R.id.btnMore);
+        Button btnMore = findViewById(R.id.btnMore);
 
         PieChart pieChart = findViewById(R.id.pieChart);
 
@@ -80,9 +81,9 @@ public class HomeActivity extends AppCompatActivity {
 
         android.util.Log.d("DB_LOG", "Income: " + income + " | Expense: " + expense + " | Balance: " + balance);
 
-        tvIncome.setText(String.valueOf(income));
-        tvExpense.setText(String.valueOf(expense));
-        tvBalance.setText(String.valueOf(balance));
+        tvIncome.setText("฿" + income);
+        tvExpense.setText("฿" + expense);
+        tvBalance.setText("฿" + balance);
     }
 
     private void loadTransactions() {
@@ -109,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
 
             // Amount column
             TextView tvAmount = new TextView(this);
-            tvAmount.setText(String.valueOf(amount));
+            tvAmount.setText("฿" + amount);
             tvAmount.setPadding(10, 10, 10, 10);
             tvAmount.setGravity(android.view.Gravity.END | android.view.Gravity.CENTER_VERTICAL);
             if ("รายรับ".equalsIgnoreCase(type)) {
@@ -131,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupPieChart(PieChart pieChart) {
-        Cursor cursor = dbHelper.getExpenseAndSavingsThisMonth(); // <- use this month only
+        Cursor cursor = dbHelper.getExpenseAndSavingsThisMonth();
 
         List<PieEntry> entries = new ArrayList<>();
 
@@ -142,17 +143,60 @@ public class HomeActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        PieDataSet dataSet = new PieDataSet(entries, "ค่าใช้จ่ายตามประเภท");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        PieDataSet dataSet = new PieDataSet(entries, "");
+
+        // ---- Unique colors ----
+        List<Integer> uniqueColors = new ArrayList<>();
+        uniqueColors.add(Color.parseColor("#FF6B6B")); // red
+        uniqueColors.add(Color.parseColor("#4ECDC4")); // teal
+        uniqueColors.add(Color.parseColor("#556270")); // blue-gray
+        uniqueColors.add(Color.parseColor("#C7F464")); // lime
+        uniqueColors.add(Color.parseColor("#FFCC5C")); // yellow
+        uniqueColors.add(Color.parseColor("#5DA5DA")); // blue
+        uniqueColors.add(Color.parseColor("#B276B2")); // purple
+        uniqueColors.add(Color.parseColor("#60BD68")); // green
+        uniqueColors.add(Color.parseColor("#F17CB0")); // pink
+        uniqueColors.add(Color.parseColor("#DECF3F")); // gold
+
+        dataSet.setColors(uniqueColors);
+
         dataSet.setValueTextSize(12f);
         dataSet.setValueTextColor(Color.BLACK);
+        pieChart.setDrawEntryLabels(true);
+        pieChart.setEntryLabelColor(Color.WHITE);
+        pieChart.setEntryLabelTextSize(10f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.TRANSPARENT);
 
+        // ---- Add ฿ prefix ----
         PieData data = new PieData(dataSet);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "฿" + ((int) value);
+            }
+        });
+
         pieChart.setData(data);
+
+        // ---- Center Text ----
+        pieChart.setDrawCenterText(true);
+        pieChart.setCenterText("ค่าใช้จ่าย");
+        pieChart.setCenterTextSize(18f);
+        pieChart.setCenterTextColor(Color.BLACK);
+
+        // ---- Remove description label ----
         pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("ค่าใช้จ่าย & ออมเงิน/ลงทุน");
-        pieChart.setCenterTextSize(16f);
-        pieChart.animateY(1000);
+
+        // ---- Legend settings ----
+        Legend legend = pieChart.getLegend();
+        legend.setEnabled(true);
+        legend.setWordWrapEnabled(true);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
+
         pieChart.invalidate();
     }
 }
