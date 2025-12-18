@@ -1,0 +1,25 @@
+﻿แอปพลิเคชันนูมอรา: ระบบจัดการการเงินส่วนบุคคล
+NUMORA APPLICATION: PERSONAL FINANCAIL
+
+ABSTRACT
+
+	This report presents Numora, an Android application for personal financial 
+management, designed to align with the financial behavior of Thai users. The application aims to 
+help users better understand their income and expenses, control spending behavior, and build 
+financial discipline through clear visualizations and straightforward recommendations. 
+	Numora supports income and expense recording, transaction categorization, 
+transaction tagging, recurring items, budget planning, and financial goal setting. It also incorporates 
+a Dynamic 50-30-20 Rule, which adjusts allocation ratios based on users’ actual spending 
+behavior, allowing the system to provide flexible recommendations for savings, essential expenses, 
+and discretionary spending.
+	The system is developed using the Java programming language in conjunction with an 
+SQLite database and follows the Model–View–Controller (MVC) architectural pattern. The 
+application is designed to operate entirely offline, reducing dependency on external database 
+connections, improving data access performance, and minimizing system complexity. The MVC 
+architecture is applied to clearly separate the presentation, control, and data management 
+components, making the system easier to maintain, modify, and extend. This separation also limits 
+direct access to the data layer from the presentation layer, contributing to a more structured and 
+secure overall system design.
+
+Keywords: Personal finance, Android application, budgeting, offline-first, financial behavior.
+
