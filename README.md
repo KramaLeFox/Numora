@@ -4,7 +4,7 @@
 It provides a structured and user-friendly way to manage and interact with numerical data on mobile devices.
 
 [![Android](https://img.shields.io/badge/Platform-Android-green?style=flat&logo=android)](https://www.android.com/)
-[![Min SDK](https://img.shields.io/badge/Min%20SDK-29-blue)](https://developer.android.com/about/versions/10)
+[![Min SDK](https://img.shields.io/badge/Min%20SDK-34-blue)](https://developer.android.com/about/versions/14)
 [![Android Studio](https://img.shields.io/badge/Built%20with-Android%20Studio-3DDC84?style=flat&logo=android-studio)](https://developer.android.com/studio)
 
 ## Overview
@@ -48,8 +48,8 @@ The application follows Android development best practices, with a clear separat
 To build and run the project from source, you need:
 
 - Operating System: Windows 10 or later
-- Android Studio (Hedgehog or newer)
-- Android SDK (API level 33 or higher recommended)
+- Android Studio (latest stable version)
+- Android SDK (API level 34 or higher recommended)
 - Java JDK 17
 - Gradle (included via wrapper)
 
@@ -72,11 +72,15 @@ To build and run the project from source, you need:
 
 A pre-built debug APK is provided in the `apk/` directory for convenience.
 
-Steps:
-
+### On a Physical Device
 1. Transfer `Numora-debug.apk` to your Android device.
 2. Enable **Install unknown apps** in device settings.
 3. Install the APK and launch the application.
+
+### On Android Emulator (in Android Studio)
+1. Start your Android emulator from the AVD Manager in Android Studio.
+2. Drag and drop the `Numora-debug.apk` file directly onto the emulator window.
+3. The installation will begin automatically. Once complete, launch the application from the emulator's app drawer.
 
 ## Usage
 
@@ -97,5 +101,5 @@ A demonstration video showing the installation process and application usage is 
 ## Notes
 
 - The application was tested using Android Emulator (Pixel series).
-- Recommended minimum Android version: Android 10 (API 29).
+- Recommended minimum Android version: Android 14 (API 34).
 - The included APK is intended for demonstration and evaluation purposes only.
