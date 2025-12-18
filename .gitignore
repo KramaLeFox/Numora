@@ -6,6 +6,9 @@ app/build/
 .cxx/
 captures/
 
+# Kotlin
+.kotlin/
+
 # Android Studio / IntelliJ
 .idea/
 *.iml
