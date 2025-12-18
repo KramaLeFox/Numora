@@ -1,18 +1,36 @@
-# Numora
+# NUMORA
 
-**Numora** is an Android application developed as part of **Special Project II (CS403)**.  
-It provides a structured and user-friendly way to manage and interact with numerical data on mobile devices.
+## ข้อมูลโครงงาน
 
-[![Android](https://img.shields.io/badge/Platform-Android-green?style=flat&logo=android)](https://www.android.com/)
-[![Min SDK](https://img.shields.io/badge/Min%20SDK-34-blue)](https://developer.android.com/about/versions/14)
-[![Android Studio](https://img.shields.io/badge/Built%20with-Android%20Studio-3DDC84?style=flat&logo=android-studio)](https://developer.android.com/studio)
+**รหัสโครงงาน:**  
+67-2_07_ssr-s1
 
-## Overview
+**ชื่อโครงงาน (ภาษาไทย):**  
+ระบบจัดการและแสดงผลข้อมูลเชิงตัวเลขบนอุปกรณ์แอนดรอยด์
 
-Numora focuses on simplicity and usability while handling numerical information.  
-The application follows Android development best practices, with a clear separation between data handling, business logic, and user interface components.
+**Project Title (English):**  
+NUMORA
 
-## Repository Structure
+**อาจารย์ที่ปรึกษาโครงงาน:**  
+ผศ.ดร. ทรงศักดิ์ รองวิริยะพานิช
+
+**ผู้จัดทำโครงงาน:**  
+นาย ปัณณทัต มณีวงศ์ 6509650542  
+สาขาวิชาวิทยาการคอมพิวเตอร์
+
+---
+
+## Manual / Instructions for the Project
+
+### Project Overview
+
+Numora is an Android application developed as part of **Special Project II (CS403)**.  
+The application provides a structured and user-friendly way to manage and interact with numerical data on mobile devices.  
+It is designed following Android development best practices, with a clear separation between data handling, application logic, and user interface components.
+
+---
+
+### Repository Structure
 
 ```
 .
@@ -23,14 +41,14 @@ The application follows Android development best practices, with a clear separat
 │   │   │   │   ├── database/     # Database and data access layer
 │   │   │   │   ├── models/       # Data model classes
 │   │   │   │   ├── modules/      # Core application logic
-│   │   │   │   ├── ui/           # Activities, Fragments, and UI logic
-│   │   │   │   └── utils/        # Utility and helper classes
+│   │   │   │   ├── ui/           # Activities and UI logic
+│   │   │   │   └── utils/        # Utility classes
 │   │   │   └── res/
 │   │   │       ├── layout/       # XML layout files
 │   │   │       ├── drawable/     # Drawable resources
 │   │   │       ├── mipmap/       # Application icons
-│   │   │       ├── values/       # Colors, styles, and string resources
-│   │   │       └── xml/          # Configuration XML files
+│   │   │       ├── values/       # Colors, styles, and strings
+│   │   │       └── xml/          # Configuration files
 │   │   ├── test/                 # Unit tests
 │   │   └── androidTest/          # Instrumented tests
 │   └── build.gradle
@@ -43,64 +61,73 @@ The application follows Android development best practices, with a clear separat
 └── README.md
 ```
 
-> Note: Auto-generated directories such as `app/build`, `.gradle`, and `.idea` are omitted for clarity.
+> **Note:** Auto-generated directories such as `app/build`, `.gradle`, and `.idea` are omitted.
 
-## Prerequisites
+---
 
-To build and run the project from source, you need:
+### System Requirements
 
-- Operating System: Windows 10 or later
-- Android Studio (Otter or newer)
-- Android SDK (API level 34 or higher recommended)
-- Java JDK 17
-- Gradle (included via wrapper)
+- **Operating System:** Windows 10 or later  
+- **Android Studio:** Latest stable version  
+- **Android SDK:** API level 34 or higher  
+- **Java JDK:** Version 17  
+- **Gradle:** Included via Gradle Wrapper  
 
-## Installation from Source Code
+---
 
-1. Clone the repository:
+### Installation from Source Code
+
+1. Clone the project repository:
    ```bash
    git clone <repository_url>
    ```
 
-2. Open the project in **Android Studio**.
+2. Open the project in Android Studio.
 
-3. Allow Gradle to sync and download dependencies.
+3. Allow Gradle to synchronize and download dependencies.
 
 4. Select an Android emulator or connect a physical Android device.
 
 5. Build and run the application.
 
-## APK Installation
+---
+
+### APK Installation
 
 A pre-built debug APK is provided in the `apk/` directory for convenience.
 
-### On a Physical Device
-1. Transfer `Numora-debug.apk` to your Android device.
-2. Enable **Install unknown apps** in device settings.
-3. Install the APK and launch the application.
+#### On a Physical Device
+- Copy `Numora-debug.apk` to the Android device.
+- Enable **Install unknown apps** in device settings.
+- Install and launch the application.
 
-### On Android Emulator (in Android Studio)
-1. Start your Android emulator from the AVD Manager in Android Studio.
-2. Drag and drop the `Numora-debug.apk` file directly onto the emulator window.
-3. The installation will begin automatically. Once complete, launch the application from the emulator's app drawer.
+#### On Android Emulator
+- Start an Android emulator from the AVD Manager in Android Studio.
+- Drag and drop `Numora-debug.apk` into the emulator window.
+- Wait for installation to complete and launch the application from the app drawer.
 
-## Usage
+---
 
-1. Launch the Numora application.
-2. Interact with the main interface.
-3. Navigate features using the provided UI components.
-4. Data is processed and managed according to the application's logic.
+### Usage Instructions
 
-## Demo Video
+- Launch the Numora application.
+- Interact with the main interface.
+- Navigate features using the provided UI components.
+- The application processes numerical data according to its designed logic.
 
-A demonstration video showing the installation process and application usage is available at:  
-`demo/68-1_CS403_67-2_07_ssr-s1_demo_link.txt`
+---
 
-## Team Members
+### Demo Video
 
-- Punnatut Maneewong (6509650542)
+A demonstration video showing the installation process and application usage is available at:
 
-## Notes
+```
+demo/68-1_CS403_67-2_07_ssr-s1_demo_link.txt
+```
+
+---
+
+### Additional Notes
 
 - The application was tested using Android Emulator (Pixel series).
 - Recommended minimum Android version: Android 14 (API 34).
