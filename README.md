@@ -83,7 +83,8 @@ It is designed following Android development best practices, with a clear separa
 - **Operating System:** Windows 10 or later  
 - **Android Studio:** Latest stable version  
 - **Android SDK:** API level 34 or higher  
-- **Java JDK:** Version 17  
+- **Java JDK:** JetBrains Runtime (JBR) 21 included with Android Studio
+(Project source compatible with Java 17)
 - **Gradle:** Included via Gradle Wrapper  
 
 ---
