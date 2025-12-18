@@ -36,6 +36,8 @@ The application follows Android development best practices, with a clear separat
 │   └── build.gradle
 ├── apk/
 │   └── Numora-debug.apk          # Pre-built APK file
+├── demo/
+│   └── 68-1_CS403_67-2_07_ssr-s1_demo_link.txt # Demo video link
 ├── gradle/
 │   └── wrapper/
 └── README.md
@@ -48,7 +50,7 @@ The application follows Android development best practices, with a clear separat
 To build and run the project from source, you need:
 
 - Operating System: Windows 10 or later
-- Android Studio (latest stable version)
+- Android Studio (Otter or newer)
 - Android SDK (API level 34 or higher recommended)
 - Java JDK 17
 - Gradle (included via wrapper)
