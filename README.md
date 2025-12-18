@@ -9,8 +9,7 @@
 แอปพลิเคชันนูมอรา: ระบบจัดการการเงินส่วนบุคคล
 
 **Project Title (English):**  
-NUMORA APPLICATION: PERSONAL FINANCAIL MANAGEMENT
-SYSTEM
+NUMORA APPLICATION: PERSONAL FINANCIAL MANAGEMENT SYSTEM
 
 **อาจารย์ที่ปรึกษาโครงงาน:**  
 ผศ.ดร. ทรงศักดิ์ รองวิริยะพานิช
@@ -38,27 +37,41 @@ It is designed following Android development best practices, with a clear separa
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/com/example/finalproject/
-│   │   │   │   ├── database/     # Database and data access layer
-│   │   │   │   ├── models/       # Data model classes
-│   │   │   │   ├── modules/      # Core application logic
-│   │   │   │   ├── ui/           # Activities and UI logic
-│   │   │   │   └── utils/        # Utility classes
-│   │   │   └── res/
-│   │   │       ├── layout/       # XML layout files
-│   │   │       ├── drawable/     # Drawable resources
-│   │   │       ├── mipmap/       # Application icons
-│   │   │       ├── values/       # Colors, styles, and strings
-│   │   │       └── xml/          # Configuration files
-│   │   ├── test/                 # Unit tests
-│   │   └── androidTest/          # Instrumented tests
+│   │   │   │   ├── database/          # Database and data access layer
+│   │   │   │   ├── models/            # Data model classes
+│   │   │   │   ├── modules/           # Core application logic
+│   │   │   │   ├── ui/                # Activities, Fragments, and UI logic
+│   │   │   │   └── utils/             # Utility and helper classes
+│   │   │   └── res/                   # Layouts, drawables, values, XML configs
+│   │   ├── test/                      # Unit tests
+│   │   └── androidTest/               # Instrumented tests
 │   └── build.gradle
+│
 ├── apk/
-│   └── Numora-debug.apk          # Pre-built APK file
+│   └── Numora-debug.apk               # Pre-built APK for installation/testing
+│
 ├── demo/
-│   └── 68-1_CS403_67-2_07_ssr-s1_demo_link.txt # Demo video link
+│   └── 68-1_CS403_<project_code>_demo_link.txt
+│                                       # Link to demo video showing installation and usage
+│
+├── final_reports/
+│   ├── 68-1_CS403_<project_code>.pdf
+│   │                                   # Final project report (signed)
+│   ├── 68-1_CS403_<project_code>_abstract_th.txt
+│   │                                   # Project abstract (Thai)
+│   └── 68-1_CS403_<project_code>_abstract_en.txt
+│                                       # Project abstract (English)
+│
 ├── gradle/
-│   └── wrapper/
-└── README.md
+│   └── wrapper/                       # Gradle wrapper files
+│
+├── .gitignore                         # Git ignore rules
+├── README.md                          # Project documentation
+├── build.gradle                       # Project-level Gradle configuration
+├── gradle.properties                  # Gradle properties
+├── gradlew                            # Gradle wrapper (Unix)
+├── gradlew.bat                        # Gradle wrapper (Windows)
+└── settings.gradle                    # Gradle settings
 ```
 
 > **Note:** Auto-generated directories such as `app/build`, `.gradle`, and `.idea` are omitted.
@@ -122,7 +135,7 @@ A pre-built debug APK is provided in the `apk/` directory for convenience.
 A demonstration video showing the installation process and application usage is available at:
 
 ```
-demo/68-1_CS403_67-2_07_ssr-s1_demo_link.txt
+demo/68-1_CS403_<project_code>_demo_link.txt
 ```
 
 ---
